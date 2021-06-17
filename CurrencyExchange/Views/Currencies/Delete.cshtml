@@ -1,0 +1,65 @@
+﻿@model CurrencyExchange.DataAccess.Currency
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Currency</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Currency1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Currency1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrencyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrencyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrencyNameLatin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrencyNameLatin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderNum)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <button type="submit" value="Delete" class="btn btn-default">წაშლა</button> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>}  
+</div>

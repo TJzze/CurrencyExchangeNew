@@ -1,0 +1,85 @@
+﻿@model  CurrencyExchange.Models.viewModel
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>კონვერტაციების ცხრილი</h2>
+
+<div class="container">
+    <div>
+        @using (Html.BeginForm("Index", "Convertations", FormMethod.Get))
+        {
+        <br /><br />
+        <label style="margin-right:10px">გამოიტანეთ საეჭვო ტრანზაქციები</label>
+        @Html.CheckBoxFor(model => model.filterData.inQuestion)
+        <br />
+        <div style="display:flex">
+            <label style="margin-right:25px">ტრანზაქციების პერიოდი</label>
+            @Html.EditorFor(model => model.filterData.fromDate, new { @type = "date" })
+            @Html.EditorFor(model => model.filterData.tillDate, new { @type = "date" })
+        </div>
+        <br />
+        <button type="submit" value="Create" class="btn btn-default">გაფილტვრა</button>
+        }
+    </div>
+</div>
+<table class="table">
+    <tr>
+            <th>
+                @Html.DisplayName("მისაღები ვალუტა")
+            </th>
+            <th>
+                @Html.DisplayName("გასაცემი ვალუტა")
+            </th>
+            <th>
+                @Html.DisplayName("მისაღები თანხის ოდენობა")
+            </th>
+            <th>
+                @Html.DisplayName("გასაცემი თანხის ოდენობა")
+            </th>
+            <th>
+                @Html.DisplayName("კონვერტაციის განხორციელების თარიღი")
+            </th>
+            <th>
+                @Html.DisplayName("კომენტარი")
+            </th>
+            <th></th>
+    </tr>
+    @if (Model.convertationsData != null)
+    {
+        foreach (var item in Model.convertationsData)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BuyingCurrency)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SellingCurency)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AmountReceived)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AmountReturned)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConvertationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConverationComment)
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}

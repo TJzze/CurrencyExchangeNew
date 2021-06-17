@@ -1,0 +1,48 @@
+﻿@model CurrencyExchange.DataAccess.ExchangeRate
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ExchangeRate</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BuyingRate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BuyingRate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SellingRate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SellingRate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Currency1.Currency1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Currency1.Currency1)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

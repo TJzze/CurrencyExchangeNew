@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CurrencyExchangeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Convertations">
+          <Key>
+            <PropertyRef Name="ConvertationId" />
+          </Key>
+          <Property Name="ConvertationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BuyingCurrency" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SellingCurency" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AmountReceived" Type="float" Nullable="false" />
+          <Property Name="AmountReturned" Type="float" Nullable="false" />
+          <Property Name="ConvertationDate" Type="datetime" Nullable="false" />
+          <Property Name="ConverationComment" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Currencies">
+          <Key>
+            <PropertyRef Name="Currency" />
+          </Key>
+          <Property Name="Currency" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CurrencyName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CurrencyNameLatin" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OrderNum" Type="int" />
+        </EntityType>
+        <EntityType Name="ExchangeRates">
+          <Key>
+            <PropertyRef Name="RateID" />
+          </Key>
+          <Property Name="RateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Currency" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BuyingRate" Type="float" Nullable="false" />
+          <Property Name="SellingRate" Type="float" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Convertations_Currencies">
+          <End Role="Currencies" Type="Self.Currencies" Multiplicity="1" />
+          <End Role="Convertations" Type="Self.Convertations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currencies">
+              <PropertyRef Name="Currency" />
+            </Principal>
+            <Dependent Role="Convertations">
+              <PropertyRef Name="BuyingCurrency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Convertations_Currencies1">
+          <End Role="Currencies" Type="Self.Currencies" Multiplicity="1" />
+          <End Role="Convertations" Type="Self.Convertations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currencies">
+              <PropertyRef Name="Currency" />
+            </Principal>
+            <Dependent Role="Convertations">
+              <PropertyRef Name="SellingCurency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExchangeRates_Currencies">
+          <End Role="Currencies" Type="Self.Currencies" Multiplicity="1" />
+          <End Role="ExchangeRates" Type="Self.ExchangeRates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currencies">
+              <PropertyRef Name="Currency" />
+            </Principal>
+            <Dependent Role="ExchangeRates">
+              <PropertyRef Name="Currency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CurrencyExchangeModelStoreContainer">
+          <EntitySet Name="Convertations" EntityType="Self.Convertations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Currencies" EntityType="Self.Currencies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExchangeRates" EntityType="Self.ExchangeRates" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Convertations_Currencies" Association="Self.FK_Convertations_Currencies">
+            <End Role="Currencies" EntitySet="Currencies" />
+            <End Role="Convertations" EntitySet="Convertations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Convertations_Currencies1" Association="Self.FK_Convertations_Currencies1">
+            <End Role="Currencies" EntitySet="Currencies" />
+            <End Role="Convertations" EntitySet="Convertations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExchangeRates_Currencies" Association="Self.FK_ExchangeRates_Currencies">
+            <End Role="Currencies" EntitySet="Currencies" />
+            <End Role="ExchangeRates" EntitySet="ExchangeRates" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CurrencyExchangeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Convertation">
+          <Key>
+            <PropertyRef Name="ConvertationId" />
+          </Key>
+          <Property Name="ConvertationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BuyingCurrency" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SellingCurency" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AmountReceived" Type="Double" Nullable="false" />
+          <Property Name="AmountReturned" Type="Double" Nullable="false" />
+          <Property Name="ConvertationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ConverationComment" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Currency" Relationship="Self.FK_Convertations_Currencies" FromRole="Convertations" ToRole="Currencies" />
+          <NavigationProperty Name="Currency1" Relationship="Self.FK_Convertations_Currencies1" FromRole="Convertations" ToRole="Currencies" />
+        </EntityType>
+        <EntityType Name="Currency">
+          <Key>
+            <PropertyRef Name="Currency1" />
+          </Key>
+          <Property Name="Currency1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CurrencyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CurrencyNameLatin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrderNum" Type="Int32" />
+          <NavigationProperty Name="Convertations" Relationship="Self.FK_Convertations_Currencies" FromRole="Currencies" ToRole="Convertations" />
+          <NavigationProperty Name="Convertations1" Relationship="Self.FK_Convertations_Currencies1" FromRole="Currencies" ToRole="Convertations" />
+          <NavigationProperty Name="ExchangeRates" Relationship="Self.FK_ExchangeRates_Currencies" FromRole="Currencies" ToRole="ExchangeRates" />
+        </EntityType>
+        <EntityType Name="ExchangeRate">
+          <Key>
+            <PropertyRef Name="RateID" />
+          </Key>
+          <Property Name="RateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Currency" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BuyingRate" Type="Double" Nullable="false" />
+          <Property Name="SellingRate" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Currency1" Relationship="Self.FK_ExchangeRates_Currencies" FromRole="ExchangeRates" ToRole="Currencies" />
+        </EntityType>
+        <Association Name="FK_Convertations_Currencies">
+          <End Role="Currencies" Type="Self.Currency" Multiplicity="1" />
+          <End Role="Convertations" Type="Self.Convertation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currencies">
+              <PropertyRef Name="Currency1" />
+            </Principal>
+            <Dependent Role="Convertations">
+              <PropertyRef Name="BuyingCurrency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Convertations_Currencies1">
+          <End Role="Currencies" Type="Self.Currency" Multiplicity="1" />
+          <End Role="Convertations" Type="Self.Convertation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currencies">
+              <PropertyRef Name="Currency1" />
+            </Principal>
+            <Dependent Role="Convertations">
+              <PropertyRef Name="SellingCurency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExchangeRates_Currencies">
+          <End Role="Currencies" Type="Self.Currency" Multiplicity="1" />
+          <End Role="ExchangeRates" Type="Self.ExchangeRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Currencies">
+              <PropertyRef Name="Currency1" />
+            </Principal>
+            <Dependent Role="ExchangeRates">
+              <PropertyRef Name="Currency" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CurrencyExchangeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Convertations" EntityType="Self.Convertation" />
+          <EntitySet Name="Currencies" EntityType="Self.Currency" />
+          <EntitySet Name="ExchangeRates" EntityType="Self.ExchangeRate" />
+          <AssociationSet Name="FK_Convertations_Currencies" Association="Self.FK_Convertations_Currencies">
+            <End Role="Currencies" EntitySet="Currencies" />
+            <End Role="Convertations" EntitySet="Convertations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Convertations_Currencies1" Association="Self.FK_Convertations_Currencies1">
+            <End Role="Currencies" EntitySet="Currencies" />
+            <End Role="Convertations" EntitySet="Convertations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExchangeRates_Currencies" Association="Self.FK_ExchangeRates_Currencies">
+            <End Role="Currencies" EntitySet="Currencies" />
+            <End Role="ExchangeRates" EntitySet="ExchangeRates" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CurrencyExchangeModelStoreContainer" CdmEntityContainer="CurrencyExchangeEntities">
+          <EntitySetMapping Name="Convertations">
+            <EntityTypeMapping TypeName="CurrencyExchangeModel.Convertation">
+              <MappingFragment StoreEntitySet="Convertations">
+                <ScalarProperty Name="ConvertationId" ColumnName="ConvertationId" />
+                <ScalarProperty Name="BuyingCurrency" ColumnName="BuyingCurrency" />
+                <ScalarProperty Name="SellingCurency" ColumnName="SellingCurency" />
+                <ScalarProperty Name="AmountReceived" ColumnName="AmountReceived" />
+                <ScalarProperty Name="AmountReturned" ColumnName="AmountReturned" />
+                <ScalarProperty Name="ConvertationDate" ColumnName="ConvertationDate" />
+                <ScalarProperty Name="ConverationComment" ColumnName="ConverationComment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Currencies">
+            <EntityTypeMapping TypeName="CurrencyExchangeModel.Currency">
+              <MappingFragment StoreEntitySet="Currencies">
+                <ScalarProperty Name="Currency1" ColumnName="Currency" />
+                <ScalarProperty Name="CurrencyName" ColumnName="CurrencyName" />
+                <ScalarProperty Name="CurrencyNameLatin" ColumnName="CurrencyNameLatin" />
+                <ScalarProperty Name="OrderNum" ColumnName="OrderNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExchangeRates">
+            <EntityTypeMapping TypeName="CurrencyExchangeModel.ExchangeRate">
+              <MappingFragment StoreEntitySet="ExchangeRates">
+                <ScalarProperty Name="RateID" ColumnName="RateID" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="BuyingRate" ColumnName="BuyingRate" />
+                <ScalarProperty Name="SellingRate" ColumnName="SellingRate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

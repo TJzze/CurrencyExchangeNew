@@ -1,0 +1,50 @@
+﻿@model IEnumerable<CurrencyExchange.DataAccess.Currency>
+
+@{
+    ViewBag.Title = "ვალუტები";
+}
+
+<h2>ვალუტები</h2>
+
+<p>
+    @Html.ActionLink("ვალუტის დამატება", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Currency1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrencyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrencyNameLatin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderNum)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Currency1)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CurrencyName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CurrencyNameLatin)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.OrderNum)
+    </td>
+    <td>
+        @Html.ActionLink("შეცვლა", "Edit", new { id = item.Currency1 }) |
+        @Html.ActionLink("წაშლა", "Delete", new { id = item.Currency1 })
+    </td>
+</tr>
+}
+
+</table>

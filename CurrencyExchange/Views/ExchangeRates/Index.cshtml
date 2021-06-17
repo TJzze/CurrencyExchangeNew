@@ -1,0 +1,44 @@
+﻿@model IEnumerable<CurrencyExchange.DataAccess.ExchangeRate>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BuyingRate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SellingRate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Currency1)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BuyingRate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SellingRate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Currency1.Currency1)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RateID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RateID })
+        </td>
+    </tr>
+}
+
+</table>
